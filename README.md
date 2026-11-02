@@ -15,10 +15,11 @@ The server is hosted. Connect to it at:
 https://usefulwork.app/mcp
 ```
 
-Streamable HTTP, no sessions, signed in with an API key from your dashboard. It's listed in the
+Streamable HTTP with OAuth sign-in: the first time your assistant connects, a Useful Work page
+opens for you to approve it. It's listed in the
 [official MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers?search=app.usefulwork)
-as `app.usefulwork/useful-work`. This repository holds the setup guide and the registry entry
-([`server.json`](server.json)); the server's own code isn't published.
+as `app.usefulwork/useful-work`. This repository holds the setup guide, the registry entry
+([`server.json`](server.json)) and an agent plugin; the server's own code isn't published.
 
 ## What your assistant can do
 
@@ -31,7 +32,7 @@ as `app.usefulwork/useful-work`. This repository holds the setup guide and the r
 | `ignore` | Clear anything that isn't really a problem |
 | `recheck` | Read the website again after you publish; fixed items confirm themselves |
 | `credit` | Your checking credit, and where to add more |
-| `add_site` | List a new website (only with keys you allow to add websites) |
+| `add_site` | List a new website (only if you allowed it when you connected) |
 
 Plus a ready-made prompt, `fix_my_site`, and each website's fix list as a resource at
 `usefulwork://fixes/{domain}`.
@@ -39,69 +40,61 @@ Plus a ready-made prompt, `fix_my_site`, and each website's fix list as a resour
 ## Set up
 
 1. Sign in at [usefulwork.app/app](https://usefulwork.app/app) and add your website.
-2. Open **Connect your AI** and make a key. It's shown once and starts with `uwk_`.
-3. Add the server to your assistant. The dashboard shows each of these with your key filled in.
+2. Add the server to your assistant.
+3. Approve it on the Useful Work page that opens the first time it connects. It then shows under
+   **Connect your AI** in your dashboard, where you can disconnect it any time.
 
-**Claude Code**
+**Claude Code**: run this, then type `/mcp` and choose Authenticate.
 
 ```sh
-claude mcp add --transport http --scope user useful-work https://usefulwork.app/mcp \
-  --header "Authorization: Bearer uwk_your_key"
+claude mcp add --transport http --scope user useful-work https://usefulwork.app/mcp
 ```
 
-**Cursor**: in `~/.cursor/mcp.json`
+**Cursor**: in `~/.cursor/mcp.json`, then click Needs login next to Useful Work.
 
 ```json
 {
   "mcpServers": {
-    "useful-work": {
-      "url": "https://usefulwork.app/mcp",
-      "headers": { "Authorization": "Bearer uwk_your_key" }
-    }
+    "useful-work": { "url": "https://usefulwork.app/mcp" }
   }
 }
 ```
 
-**VS Code**: in `.vscode/mcp.json`. VS Code asks for the key the first time and keeps it out of the file.
+**VS Code**: in `.vscode/mcp.json`. VS Code asks you to sign in the first time it connects.
 
 ```json
 {
-  "inputs": [
-    { "type": "promptString", "id": "useful-work-key", "description": "Useful Work API key", "password": true }
-  ],
   "servers": {
-    "useful-work": {
-      "type": "http",
-      "url": "https://usefulwork.app/mcp",
-      "headers": { "Authorization": "Bearer ${input:useful-work-key}" }
-    }
+    "useful-work": { "type": "http", "url": "https://usefulwork.app/mcp" }
   }
 }
 ```
 
-**Anything else**: point a remote MCP client at `https://usefulwork.app/mcp` over Streamable HTTP,
-with the header `Authorization: Bearer uwk_your_key`.
+**Claude.ai, ChatGPT and other apps**: add a custom connector with the address
+`https://usefulwork.app/mcp`.
+
+**Assistants that can't sign in**: make an API key under **Connect your AI** in your dashboard and
+send it as the header `Authorization: Bearer uwk_…`.
 
 Then open your website's project and ask: *"Use Useful Work to fix my website."* In Claude Code the
 prompt is also there as `/mcp__useful-work__fix_my_site`.
 
 ## As an agent plugin
 
-This repository is also an [Agent Plugin](https://open-plugins.com) ([`plugin.json`](plugin.json))
-with one skill, [`fix-website`](skills/fix-website/SKILL.md). It connects the server in your
-assistant's own settings if it isn't set up yet, then runs the fix: get the list, change the code,
-mark items fixed, re-check after you publish. The plugin carries no `mcp.json`, because the server
-signs in with your key and plugin files can't hold secrets.
+This repository is also an [Agent Plugin](https://open-plugins.com): [`plugin.json`](plugin.json),
+the server in [`mcp.json`](mcp.json), and one skill, [`fix-website`](skills/fix-website/SKILL.md),
+which gets the fix list, changes the code, marks items fixed and asks for a re-check after you
+publish. The server signs in on its own, so the plugin carries no secrets.
 
-## Keys and safety
+## Safety
 
 - Text quoted from your website is marked in every result as content to edit, never instructions to
   follow. Anyone can write on a website (a review, a comment), so the server treats it as data.
-- A key can read your websites, mark items fixed or ignored, and ask for a re-check. It can add
-  websites only if you tick that when you make it. No key can pay, make other keys or change your
+- A connected assistant can read your websites, mark items fixed or ignored, and ask for a re-check.
+  It can add websites only if you tick that when you approve it. It can't pay or change your
   settings.
-- Keep keys out of your project's files and repository. Revoke one any time in the dashboard; it
-  stops working straight away.
+- Disconnect an assistant, or revoke a key, any time in your dashboard; it stops working straight
+  away. Keep keys out of your project's files and repository.
 
 ## What it costs
 

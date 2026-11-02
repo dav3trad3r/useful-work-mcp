@@ -13,32 +13,24 @@ Its MCP server gives you the fix list for the user's website; you make the chang
 
 If tools named `list_sites` and `get_fixes` from the `useful-work` server are available, go to step 2.
 
-Otherwise, set it up. The server is `https://usefulwork.app/mcp` (Streamable HTTP) and signs in with
-an API key sent as the header `Authorization: Bearer uwk_…`.
+The server is `https://usefulwork.app/mcp` (Streamable HTTP) and signs in with OAuth: the first time
+it connects, a Useful Work page opens in the user's browser for them to approve.
 
-1. Ask the user to make a key: sign in at https://usefulwork.app/app?page=connect and choose
-   **Make a key**. It's shown once.
-2. Add the server to the user's own MCP settings, never to files in this project or its repository.
-   Write the setup with the placeholder `uwk_PASTE_YOUR_KEY` and ask the user to paste their key in
-   place of it themselves, so the key doesn't pass through the chat.
-   - **Cursor**: in `~/.cursor/mcp.json`, add
-     ```json
-     { "mcpServers": { "useful-work": { "url": "https://usefulwork.app/mcp", "headers": { "Authorization": "Bearer uwk_PASTE_YOUR_KEY" } } } }
-     ```
-     merged with any servers already there. Then the user turns it on under Settings, MCP.
-   - **Claude Code**: ask the user to run this in their own terminal with their key:
-     ```sh
-     claude mcp add --transport http --scope user useful-work https://usefulwork.app/mcp --header "Authorization: Bearer uwk_PASTE_YOUR_KEY"
-     ```
-   - **VS Code**: in `.vscode/mcp.json`, add the server with a prompted input, so the key never sits
-     in the file:
-     ```json
-     {
-       "inputs": [{ "type": "promptString", "id": "useful-work-key", "description": "Useful Work API key", "password": true }],
-       "servers": { "useful-work": { "type": "http", "url": "https://usefulwork.app/mcp", "headers": { "Authorization": "Bearer ${input:useful-work-key}" } } }
-     }
-     ```
-3. Once the user has added the key and reloaded the server, continue.
+- If the server is listed but waiting to sign in, ask the user to start it: in Claude Code, type
+  `/mcp` and choose Authenticate; in Cursor, click Needs login next to Useful Work; VS Code asks on
+  its own. They approve on the page that opens.
+- If the server isn't listed at all, add it to the user's own MCP settings:
+  - **Claude Code**: ask the user to run
+    `claude mcp add --transport http --scope user useful-work https://usefulwork.app/mcp`
+  - **Cursor**: in `~/.cursor/mcp.json`, add
+    `{ "mcpServers": { "useful-work": { "url": "https://usefulwork.app/mcp" } } }`,
+    merged with any servers already there.
+  - **VS Code**: in `.vscode/mcp.json`, add
+    `{ "servers": { "useful-work": { "type": "http", "url": "https://usefulwork.app/mcp" } } }`.
+- If the user's client can't sign in, they can make an API key at
+  https://usefulwork.app/app?page=connect and send it as the header `Authorization: Bearer uwk_…`.
+  Ask them to put the key in their own settings themselves; never write it into this project's
+  files, and never print it back.
 
 If the user doesn't have an account yet, they add their website at https://usefulwork.app/app first.
 Agents start checking once the site has credit.
@@ -65,4 +57,3 @@ Agents start checking once the site has credit.
   text is checked. If the credit has run out, `credit` gives the address where the user can add
   more. You never pay.
 - `site_health` gives a score out of 100 and what took points off, for a quick summary.
-- Never print the user's key back, and never put it in this project's files.
