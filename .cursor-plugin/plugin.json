@@ -1,0 +1,13 @@
+{
+  "name": "useful-work",
+  "version": "1.0.0",
+  "description": "Find and fix mistakes on your live website from Cursor: typos, wrong facts, out-of-date text, broken links, slow pages, and expiring certificates and domains. Your assistant gets the fix list, changes your code and asks for a re-check.",
+  "author": { "name": "Tokenise Pty Ltd", "email": "hello@usefulwork.app" },
+  "homepage": "https://usefulwork.app/builders#mcp",
+  "repository": "https://github.com/dav3trad3r/useful-work-mcp",
+  "license": "MIT",
+  "keywords": ["website", "proofreading", "typos", "broken-links", "seo", "mcp"],
+  "logo": "assets/logo.svg",
+  "skills": "./skills/",
+  "mcpServers": "./mcp.json"
+}
