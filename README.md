@@ -85,6 +85,14 @@ with the header `Authorization: Bearer uwk_your_key`.
 Then open your website's project and ask: *"Use Useful Work to fix my website."* In Claude Code the
 prompt is also there as `/mcp__useful-work__fix_my_site`.
 
+## As an agent plugin
+
+This repository is also an [Agent Plugin](https://open-plugins.com) ([`plugin.json`](plugin.json))
+with one skill, [`fix-website`](skills/fix-website/SKILL.md). It connects the server in your
+assistant's own settings if it isn't set up yet, then runs the fix: get the list, change the code,
+mark items fixed, re-check after you publish. The plugin carries no `mcp.json`, because the server
+signs in with your key and plugin files can't hold secrets.
+
 ## Keys and safety
 
 - Text quoted from your website is marked in every result as content to edit, never instructions to

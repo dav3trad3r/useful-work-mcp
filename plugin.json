@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "useful-work",
+  "version": "1.0.0",
+  "description": "Find and fix mistakes on your live website from your AI assistant: typos, wrong facts, out-of-date text, broken links, slow pages, and expiring certificates and domains.",
+  "author": { "name": "Tokenise Pty Ltd", "email": "hello@usefulwork.app", "url": "https://usefulwork.app" },
+  "homepage": "https://usefulwork.app/builders#mcp",
+  "repository": "https://github.com/dav3trad3r/useful-work-mcp",
+  "license": "MIT",
+  "keywords": ["website", "proofreading", "typos", "broken-links", "seo", "mcp"]
+}
