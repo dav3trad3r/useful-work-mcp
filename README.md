@@ -81,6 +81,12 @@ send it as the header `Authorization: Bearer uwk_…`.
 Then open your website's project and ask: *"Use Useful Work to fix my website."* In Claude Code the
 prompt is also there as `/mcp__useful-work__fix_my_site`.
 
+## Pull-request checks
+
+[`github-action`](github-action) is a GitHub Action for teams that look after websites: on every pull
+request it compares the preview deploy with the live site and comments with any page, link, image or
+launch problem the change would put live. Setup is in its [README](github-action/README.md).
+
 ## As an agent plugin
 
 This repository is also an [Agent Plugin](https://open-plugins.com): [`plugin.json`](plugin.json),

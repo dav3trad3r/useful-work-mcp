@@ -1,0 +1,46 @@
+name: Useful Work preview check
+description: Compare a pull request's preview with the live site, and comment with any page, link, image or launch problem the change would put live.
+author: Useful Work
+branding:
+  icon: check-circle
+  color: yellow
+inputs:
+  api_key:
+    description: A Useful Work API key that can re-check sites (make one in your dashboard under Connect your AI). Keep it in a repository secret.
+    required: true
+  site:
+    description: The live website, as listed in your Useful Work account, like example.com.
+    required: true
+  preview_url:
+    description: The preview's https address. Leave empty on deployment_status events from Vercel or Netlify, which carry it.
+    required: false
+  paths:
+    description: Pages to compare, one per line or comma-separated. Empty compares the site's known pages and the preview's sitemap.
+    required: false
+  mode:
+    description: "changed (default): report only what differs from the live site. all: check every listed page in full."
+    required: false
+    default: changed
+  vercel_bypass:
+    description: Vercel's Protection Bypass for Automation secret, if your previews ask for a login.
+    required: false
+  github_token:
+    description: Token used to post the comment. The default works when the job has pull-requests write permission.
+    required: false
+    default: ${{ github.token }}
+  fail_on_problems:
+    description: Set to true to fail the check when the change would put a problem live.
+    required: false
+    default: "false"
+  api_base:
+    description: Where Useful Work runs.
+    required: false
+    default: https://usefulwork.app
+outputs:
+  problems:
+    description: How many problems the change would put live.
+  pages_changed:
+    description: How many pages differ from the live site.
+runs:
+  using: node24
+  main: index.js

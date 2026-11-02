@@ -1,0 +1,7 @@
+{
+  "name": "useful-work-preview-check",
+  "private": true,
+  "description": "GitHub Action: compare a pull request's preview with the live site and comment with what it would break.",
+  "type": "commonjs",
+  "main": "index.js"
+}
