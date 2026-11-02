@@ -1,5 +1,7 @@
 # Useful Work MCP server
 
+[![mcptry](https://mcptry.com/badge/app.usefulwork/useful-work)](https://mcptry.com/servers/app.usefulwork/useful-work)
+
 Fix your website from your own AI assistant. [Useful Work](https://usefulwork.app) checks websites
 for typos, wrong facts, out-of-date text, broken links and images, slow pages, and security
 certificates and domains that are about to run out. A problem is only reported once at least two
