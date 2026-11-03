@@ -72,6 +72,17 @@ claude mcp add --transport http --scope user useful-work https://usefulwork.app/
 }
 ```
 
+**Cline**: in `cline_mcp_settings.json`, with an API key from **Connect your AI** (see
+[llms-install.md](llms-install.md)).
+
+```json
+{
+  "mcpServers": {
+    "useful-work": { "type": "streamableHttp", "url": "https://usefulwork.app/mcp", "headers": { "Authorization": "Bearer uwk_YOUR_KEY" } }
+  }
+}
+```
+
 **Claude.ai, ChatGPT and other apps**: add a custom connector with the address
 `https://usefulwork.app/mcp`.
 
