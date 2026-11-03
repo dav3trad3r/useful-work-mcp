@@ -1,0 +1,11 @@
+{
+  "name": "useful-work",
+  "version": "1.0.0",
+  "description": "Find and fix mistakes on your live website: typos, wrong facts, out-of-date text, broken links, slow pages, and expiring certificates and domains.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "useful-work": {
+      "httpUrl": "https://usefulwork.app/mcp"
+    }
+  }
+}

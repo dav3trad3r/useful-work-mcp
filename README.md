@@ -72,6 +72,12 @@ claude mcp add --transport http --scope user useful-work https://usefulwork.app/
 }
 ```
 
+**Gemini CLI**: install this repository as an extension, then run `/mcp auth useful-work`.
+
+```sh
+gemini extensions install https://github.com/dav3trad3r/useful-work-mcp
+```
+
 **Cline**: in `cline_mcp_settings.json`, with an API key from **Connect your AI** (see
 [llms-install.md](llms-install.md)).
 
