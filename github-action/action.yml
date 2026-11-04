@@ -1,5 +1,5 @@
 name: Useful Work preview check
-description: Compare a pull request's preview with the live site, and comment with any page, link, image or launch problem the change would put live.
+description: Compare a pull request's preview with the live site and comment with any broken page, link or launch problem it would add.
 author: Useful Work
 branding:
   icon: check-circle
