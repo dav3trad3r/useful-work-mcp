@@ -1,5 +1,7 @@
 # Useful Work preview check
 
+This Action has its own repository, [dav3trad3r/useful-work-preview-check](https://github.com/dav3trad3r/useful-work-preview-check); use it as `dav3trad3r/useful-work-preview-check@v1`. This copy stays so existing workflows keep working.
+
 Checks each pull request's preview against your live site and posts one comment on the pull request with anything the change would put live:
 
 - pages that work live but are missing from the preview
@@ -32,7 +34,7 @@ jobs:
     if: github.event.deployment_status.state == 'success' && github.event.deployment.environment != 'Production'
     runs-on: ubuntu-latest
     steps:
-      - uses: dav3trad3r/useful-work-mcp/github-action@main
+      - uses: dav3trad3r/useful-work-preview-check@v1
         with:
           api_key: ${{ secrets.USEFUL_WORK_API_KEY }}
           site: example.com
@@ -49,7 +51,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: dav3trad3r/useful-work-mcp/github-action@main
+      - uses: dav3trad3r/useful-work-preview-check@v1
         with:
           api_key: ${{ secrets.USEFUL_WORK_API_KEY }}
           site: example.com
